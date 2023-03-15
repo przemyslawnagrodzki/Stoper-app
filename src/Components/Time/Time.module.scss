@@ -1,0 +1,12 @@
+@use "sass:math";
+@import '../../styles/settings.scss';
+
+.timer {
+    color: #fff;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: black;
+    width: 100%
+}
