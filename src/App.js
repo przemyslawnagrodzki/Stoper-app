@@ -1,23 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import Time from './Components/Time/Time';
-import { ButtonStart, ButtonStop, ButtonReset } from './Components/Buttons/Buttons';
+import Button from './Components/Buttons/Buttons';
 import styles from './Components/Buttons/Buttons.module.scss'
 
 const App = () => {
   const [time, setTime] = useState(0);
-  const [intervalId, setIntervalId] = useState(null);
+  const [timer, setTimer] = useState('');
+
+  const start = () => {
+    setTimer(setInterval(() => {
+      setTime(prevValue => prevValue + 1)}, 1));
+  };
+
+  const stop = () => {
+    clearInterval(timer);
+  };
+
+  const reset = () => {
+    setTime(0);
+  };
 
   useEffect(() => {
-    return () => clearInterval(intervalId);
-  }, [intervalId]);
+    return() => {
+      if(timer) clearInterval(timer)
+    }
+  }, []);
 
   return (
     <div>
-      <Time time={time} setTime={setTime} intervalId={intervalId} setIntervalId={setIntervalId} />
+      <Time time={time} setTime={setTime}/>
       <span className={styles.buttonsBackground}>
-        <ButtonStart intervalId={intervalId} setTime={setTime} setIntervalId={setIntervalId} />
-        <ButtonStop intervalId={intervalId} clearIntervalId={setIntervalId} />
-        <ButtonReset intervalId={intervalId} resetTimer={() => setTime(0)} />
+        <Button action={start}>START</Button>
+        <Button action={stop}>STOP</Button>
+        <Button action={reset}>RESET</Button>
       </span>
     </div>
   );
